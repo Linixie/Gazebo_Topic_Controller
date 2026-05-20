@@ -15,6 +15,6 @@ debug: build
 
 start:
     #!/usr/bin/env bash
-    ch ./plugins/topic_controller/
+    cd ./plugins/topic_controller/
     export GZ_SIM_SYSTEM_PLUGIN_PATH=$(pwd)/build
     gz sim test.sdf
