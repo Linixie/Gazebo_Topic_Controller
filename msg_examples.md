@@ -1,35 +1,42 @@
 # gz-msgs10 CLI Examples
 
-## Basic Scalar Messages
+This Document shows examples of some of the different gazebo message types.
+All examples are bash commands.
+To use the examples just replace /topic with the topic where you want to publish the message.
+I have not tested all of them but the basic ones worked when tested.
 
-### Boolean
+Source: https://github.com/gazebosim/gz-msgs/tree/gz-msgs10/proto/gz/msgs (Last accessed: 2026-05-20)
+
+# Basic Scalar Messages
+
+## Boolean
 ```bash
-gz topic -t /enable_motor -m gz.msgs.Boolean -p 'data: true'
+gz topic -t /topic -m gz.msgs.Boolean -p 'data: true'
 ```
 
-### Double
+## Double
 ```bash
-gz topic -t /cmd_vel_z -m gz.msgs.Double -p 'data: -1.5'
+gz topic -t /topic -m gz.msgs.Double -p 'data: -1.5'
 ```
 
-### Float
+## Float
 ```bash
-gz topic -t /temperature -m gz.msgs.Float -p 'data: 23.7'
+gz topic -t /topic -m gz.msgs.Float -p 'data: 23.7'
 ```
 
-### Int32
+## Int32
 ```bash
-gz topic -t /counter -m gz.msgs.Int32 -p 'data: 42'
+gz topic -t /topic -m gz.msgs.Int32 -p 'data: 42'
 ```
 
-### UInt32
+## UInt32
 ```bash
-gz topic -t /mode -m gz.msgs.UInt32 -p 'data: 3'
+gz topic -t /topic -m gz.msgs.UInt32 -p 'data: 3'
 ```
 
-### StringMsg
+## StringMsg
 ```bash
-gz topic -t /robot_name -m gz.msgs.StringMsg -p 'data: "rover1"'
+gz topic -t /topic -m gz.msgs.StringMsg -p 'data: "rover1"'
 ```
 
 ---
@@ -38,7 +45,7 @@ gz topic -t /robot_name -m gz.msgs.StringMsg -p 'data: "rover1"'
 
 ## Vector3d
 ```bash
-gz topic -t /force -m gz.msgs.Vector3d -p '
+gz topic -t /topic -m gz.msgs.Vector3d -p '
 x: 1.0
 y: 2.0
 z: 3.0'
@@ -46,14 +53,14 @@ z: 3.0'
 
 ### Vector3d (single-line)
 ```bash
-gz topic -t /force -m gz.msgs.Vector3d -p 'x: 1.0 y: 2.0 z: 3.0'
+gz topic -t /topic -m gz.msgs.Vector3d -p 'x: 1.0 y: 2.0 z: 3.0'
 ```
 
 ---
 
 ## Quaternion
 ```bash
-gz topic -t /orientation -m gz.msgs.Quaternion -p '
+gz topic -t /topic -m gz.msgs.Quaternion -p '
 x: 0
 y: 0
 z: 0
@@ -64,7 +71,7 @@ w: 1'
 
 ## Pose
 ```bash
-gz topic -t /pose -m gz.msgs.Pose -p '
+gz topic -t /topic -m gz.msgs.Pose -p '
 position {
   x: 1.0
   y: 2.0
@@ -82,7 +89,7 @@ orientation {
 
 ## Twist
 ```bash
-gz topic -t /cmd_vel -m gz.msgs.Twist -p '
+gz topic -t /topic -m gz.msgs.Twist -p '
 linear {
   x: 1.0
   y: 0.0
@@ -97,14 +104,14 @@ angular {
 
 ### Twist (compact)
 ```bash
-gz topic -t /cmd_vel -m gz.msgs.Twist -p 'linear { x: 1.0 } angular { z: 0.5 }'
+gz topic -t /topic -m gz.msgs.Twist -p 'linear { x: 1.0 } angular { z: 0.5 }'
 ```
 
 ---
 
 ## Wrench
 ```bash
-gz topic -t /wrench -m gz.msgs.Wrench -p '
+gz topic -t /topic -m gz.msgs.Wrench -p '
 force {
   x: 10
   y: 0
@@ -123,7 +130,7 @@ torque {
 
 ## IMU
 ```bash
-gz topic -t /imu -m gz.msgs.IMU -p '
+gz topic -t /topic -m gz.msgs.IMU -p '
 orientation {
   w: 1
 }
@@ -139,7 +146,7 @@ linear_acceleration {
 
 ## NavSat
 ```bash
-gz topic -t /gps -m gz.msgs.NavSat -p '
+gz topic -t /topic -m gz.msgs.NavSat -p '
 latitude_deg: 50.55
 longitude_deg: 9.68
 altitude: 250.0'
@@ -149,7 +156,7 @@ altitude: 250.0'
 
 ## LaserScan
 ```bash
-gz topic -t /scan -m gz.msgs.LaserScan -p '
+gz topic -t /topic -m gz.msgs.LaserScan -p '
 angle_min: -1.57
 angle_max: 1.57
 angle_step: 0.01
@@ -166,7 +173,7 @@ ranges: 1.4'
 
 ## Clock
 ```bash
-gz topic -t /clock -m gz.msgs.Clock -p '
+gz topic -t /topic -m gz.msgs.Clock -p '
 sim {
   sec: 123
   nsec: 456000000
@@ -177,7 +184,7 @@ sim {
 
 ## Entity
 ```bash
-gz topic -t /entity -m gz.msgs.Entity -p '
+gz topic -t /topic -m gz.msgs.Entity -p '
 id: 1
 name: "robot1"
 type: MODEL'
@@ -189,7 +196,7 @@ type: MODEL'
 
 ## Actuators
 ```bash
-gz topic -t /actuators -m gz.msgs.Actuators -p '
+gz topic -t /topic -m gz.msgs.Actuators -p '
 velocity: 1.0
 velocity: 1.2
 velocity: 1.1'
@@ -199,7 +206,7 @@ velocity: 1.1'
 
 ## JointCmd
 ```bash
-gz topic -t /joint_cmd -m gz.msgs.JointCmd -p '
+gz topic -t /topic -m gz.msgs.JointCmd -p '
 name: "wheel_joint"
 position {
   target: 1.57
@@ -212,7 +219,7 @@ position {
 
 ## Marker
 ```bash
-gz topic -t /marker -m gz.msgs.Marker -p '
+gz topic -t /topic -m gz.msgs.Marker -p '
 ns: "debug"
 id: 1
 action: ADD_MODIFY
@@ -237,65 +244,28 @@ scale {
 
 ## Publish once
 ```bash
-gz topic -t /cmd_vel -m gz.msgs.Twist -p 'linear { x: 1.0 }' --once
+gz topic -t /topic -m gz.msgs.Twist -p 'linear { x: 1.0 }' --once
 ```
 
 ---
 
 ## Publish repeatedly at 10 Hz
 ```bash
-gz topic -t /cmd_vel -m gz.msgs.Twist -p 'linear { x: 1.0 }' -r 10
+gz topic -t /topic -m gz.msgs.Twist -p 'linear { x: 1.0 }' -r 10
 ```
 
 ---
 
 ## Inspect topic type
 ```bash
-gz topic -i -t /cmd_vel
+gz topic -i -t /topic
 ```
 
 ---
 
 ## Echo topic
 ```bash
-gz topic -e -t /cmd_vel
+gz topic -e -t /topic
 ```
 
 ---
-
-# Real-World Examples
-
-## Differential drive robot
-```bash
-gz topic -t /cmd_vel -m gz.msgs.Twist -p '
-linear { x: 0.5 }
-angular { z: 0.2 }'
-```
-
----
-
-## Stop robot
-```bash
-gz topic -t /cmd_vel -m gz.msgs.Twist -p '
-linear { x: 0.0 }
-angular { z: 0.0 }'
-```
-
----
-
-## Apply force
-```bash
-gz topic -t /force -m gz.msgs.Vector3d -p '
-x: 100
-y: 0
-z: 0'
-```
-
----
-
-## Set model pose
-```bash
-gz topic -t /model/my_robot/pose -m gz.msgs.Pose -p '
-position { x: 1 y: 2 z: 0 }
-orientation { w: 1 }'
-```
