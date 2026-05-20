@@ -2,36 +2,47 @@
 #define SYSTEM_PLUGIN_MODEL_HH_
 
 #include "gz/sim/Model.hh"
-#include "gz/sim/components/LinearVelocityCmd.hh" 
+#include "gz/sim/components/LinearVelocityCmd.hh"
+#include "gz/sim/components/AngularVelocityCmd.hh"
 #include "gz/sim/components/Name.hh"
+#include "gz/sim/components/Pose.hh"
+
 #include <gz/plugin/Register.hh>
 #include <gz/sim/System.hh>
 
-namespace gz {
-namespace sim {
-namespace systems {
+#include <gz/msgs/empty.pb.h>
+#include <gz/transport/Node.hh>
 
-class TopicControl : public gz::sim::System, public gz::sim::ISystemConfigure, public gz::sim::ISystemPreUpdate {
-public:
-  TopicControl();
+namespace gz::sim::systems {
+    class TopicControl :
+            public System,
+            public ISystemConfigure,
+            public ISystemPreUpdate {
+    public:
+        TopicControl();
 
-  ~TopicControl() override;
+        ~TopicControl() override;
 
-  void Configure(const Entity &_entity,
-                 const std::shared_ptr<const sdf::Element> &_sdf,
-                 EntityComponentManager &_ecm,
-                 EventManager &_eventMgr) override;
+        //One time configuration of the plugin
+        void Configure(const Entity &_entity,
+                       const std::shared_ptr<const sdf::Element> &_sdf,
+                       EntityComponentManager &_ecm,
+                       EventManager &_eventMgr) override;
 
-  void PreUpdate(const UpdateInfo &_info,
-                 EntityComponentManager &_ecm) override;
+        //PreUpdate to change Model before physics timestep
+        void PreUpdate(const UpdateInfo &_info, EntityComponentManager &_ecm) override;
 
-private:
-  std::string modelName;
-  double zVelocity{0.0};
-  Entity targetEntity{kNullEntity};
-};
-} // namespace systems
-} // namespace sim
-} // namespace gz
+    private:
+        std::string modelName;
+        std::string topicName;
+        std::atomic<bool> reset{false};
+        std::atomic<bool> clearVelocity{false};
+        Entity targetEntity{kNullEntity};
+        transport::Node node;
+
+        //If message gets Received this function gets called
+        void OnTransportMsg(const msgs::Empty &_msg);
+    };
+} // namespace gz::sim::systems
 
 #endif
