@@ -8,9 +8,9 @@ using namespace sim;
 using namespace systems;
 
 //Constructor and Deconstructor
-TopicControl::TopicControl() { std::cout << "Plugin Started" << std::endl; }
+TopicControl::TopicControl() { gzdbg << "Plugin Started" << std::endl; }
 
-TopicControl::~TopicControl() { std::cout << "Plugin Stopped" << std::endl; }
+TopicControl::~TopicControl() { gzdbg << "Plugin Stopped" << std::endl; }
 
 //Plugin Configuration
 //Only called Once
